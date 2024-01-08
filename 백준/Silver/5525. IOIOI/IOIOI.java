@@ -4,36 +4,27 @@ import java.io.*;
 public class Main{
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
-
         int n = Integer.parseInt(br.readLine());
         int m = Integer.parseInt(br.readLine());
-        sb.append(br.readLine());
-        String IO = "IO";
-        String resIO = "";
+
+        StringBuilder sb = new StringBuilder(br.readLine());
 
         char[] c = new char[sb.length()];
+        int cnt=0, res=0;
 
         sb.getChars(0, sb.length(), c, 0);
 
-        for(int i=0; i<n; i++){
-            resIO+=IO;
-        }
-        resIO+="I";
-        int cnt=0;
-        while(sb.length()>0) {
-            int idx = -1;
-            idx = sb.indexOf(resIO);
-
-            if (idx == -1) {
-                break;
-            }
-            else {
-                sb.deleteCharAt(idx);
-                sb.deleteCharAt(idx);
+        for(int i=1; i<c.length-1; i++){
+            if(c[i-1]=='I' && c[i]=='O' && c[i+1]=='I'){
                 cnt++;
+                if(cnt==n){
+                    res++;
+                    cnt--;
+                }
+                i++;
             }
+            else cnt=0;
         }
-        System.out.println(cnt);
+        System.out.println(res);
     }
 }
