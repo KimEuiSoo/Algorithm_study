@@ -1,41 +1,30 @@
 import java.util.*;
+
 class Solution {
     public int solution(int cacheSize, String[] cities) {
-        int answer = 0;
-        int hit = 1;
-        int miss = 5;
-        
         if(cacheSize==0) return cities.length * 5;
         
-        Queue<String> qu = new LinkedList<>();
+        LinkedList<String> cache = new LinkedList<>();
         
-        for(String city : cities){
-            city = city.toUpperCase();
-            if(qu.size() < cacheSize){
-                if(qu.contains(city)){
-                    qu.remove(city);
-                    qu.add(city);
-                    answer++;
+        int time=0;
+        
+        for (String city : cities) {
+            city = city.toLowerCase();
+            
+            if (cache.remove(city)) {
+                cache.add(city);
+                time += 1;
+            } else {
+                if (cache.size() == cacheSize) {
+                    cache.removeFirst();
                 }
-                else {
-                    qu.add(city);
-                    answer+=5;
-                }
-            }
-            else{
-                if(qu.contains(city)){
-                    qu.remove(city);
-                    qu.add(city);
-                    answer++;
-                }
-                else {
-                    qu.poll();
-                    qu.add(city);
-                    answer+=5;
-                }
+                cache.add(city);
+                time += 5;
             }
         }
         
-        return answer;
+        return time;
     }
+    
+    
 }
